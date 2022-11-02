@@ -14,12 +14,12 @@ public class OutlineShader : MonoBehaviour
 
     private void createOutline(GameObject parent, Mesh mesh)
     {
-        GameObject outlineObject = new GameObject(gameObject.name + "-Outline");
+        GameObject outlineObject = new GameObject(parent.name + "-Outline");
         outlineObject.tag = "Outline";
         outlineObject.transform.parent = parent.transform;
         outlineObject.transform.localPosition = Vector3.zero;
         outlineObject.transform.localRotation = Quaternion.identity;
-        outlineObject.transform.localScale = Vector3.one;
+        outlineObject.transform.localScale = new Vector3(-1, 1, 1);
 
         outlineObject.AddComponent<MeshFilter>().mesh = mesh;
         MeshRenderer mr = outlineObject.AddComponent<MeshRenderer>();
