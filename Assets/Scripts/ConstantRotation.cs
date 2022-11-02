@@ -51,7 +51,7 @@ public class ConstantRotation : MonoBehaviour
             EditorGUILayout.EndHorizontal();
             if (cr.x)
             {
-                cr.xSpeed = EditorGUILayout.Slider(cr.xSpeed, 0f, 100f);
+                cr.xSpeed = EditorGUILayout.Slider(cr.xSpeed, -100f, 100f);
             }
 
             EditorGUILayout.BeginHorizontal();
@@ -60,7 +60,7 @@ public class ConstantRotation : MonoBehaviour
             EditorGUILayout.EndHorizontal();
             if (cr.y)
             {
-                cr.ySpeed = EditorGUILayout.Slider(cr.ySpeed, 0f, 100f);
+                cr.ySpeed = EditorGUILayout.Slider(cr.ySpeed, -100f, 100f);
             }
 
             EditorGUILayout.BeginHorizontal();
@@ -69,7 +69,7 @@ public class ConstantRotation : MonoBehaviour
             EditorGUILayout.EndHorizontal();
             if (cr.z)
             {
-                cr.zSpeed = EditorGUILayout.Slider(cr.zSpeed, 0f, 100f);
+                cr.zSpeed = EditorGUILayout.Slider(cr.zSpeed, -100f, 100f);
             }
         }
     }
