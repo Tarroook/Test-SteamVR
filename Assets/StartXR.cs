@@ -25,6 +25,21 @@ public class StartXR : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        List<XRDisplaySubsystem> displaySubsystems = new List<XRDisplaySubsystem>();
+
+        SubsystemManager.GetInstances<XRDisplaySubsystem>(displaySubsystems);
+        foreach (XRDisplaySubsystem subsystem in displaySubsystems)
+        {
+            if (subsystem.running)
+            {
+                stopXR();
+                break;
+            }
+        }
+    }
+
+    private void stopXR()
+    {
         XRGeneralSettings.Instance.Manager.StopSubsystems();
         XRGeneralSettings.Instance.Manager.DeinitializeLoader();
     }
