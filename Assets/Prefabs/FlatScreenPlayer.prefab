@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 2210276617485150729}
   - component: {fileID: 8235981488306651390}
   - component: {fileID: 2450562874106132082}
+  - component: {fileID: 5955506407303303197}
   - component: {fileID: 2210276617485150722}
   m_Layer: 8
   m_Name: PlayerCapsule
@@ -432,6 +433,18 @@ MonoBehaviour:
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
+--- !u!114 &5955506407303303197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2210276617485150734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11926e6db6d02d747ae2b0794ad4287b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2210276617485150722
 MonoBehaviour:
   m_ObjectHideFlags: 0

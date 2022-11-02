@@ -188,7 +188,7 @@ MonoBehaviour:
   screenFadeColor: {r: 0, g: 0, b: 0, a: 1}
   distanceFromFace: 1.3
   additionalOffset: {x: 0, y: -0.3, z: 0}
-  canTurnEverySeconds: 0.5
+  canTurnEverySeconds: 0.1
 --- !u!1 &5540819236398668926
 GameObject:
   m_ObjectHideFlags: 0
