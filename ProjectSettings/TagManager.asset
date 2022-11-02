@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - Outline
+  - projectile
   layers:
   - Default
   - TransparentFX
@@ -14,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
+  - Projectile
+  - Environment
   - 
   - 
   - 

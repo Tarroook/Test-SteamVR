@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1198239290899826285}
   - component: {fileID: 1198239290899826284}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerFollowCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 1198239291532687272}
   - component: {fileID: 1198239291532687276}
   - component: {fileID: 1198239291532687277}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 1567284031143991126}
   - component: {fileID: 1450060699292855112}
   - component: {fileID: 4850154842653982736}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 2450562874106132082}
   - component: {fileID: 5955506407303303197}
   - component: {fileID: 2210276617485150722}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: PlayerCapsule
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 2585180541048684052}
   - component: {fileID: 2585180541048684053}
   - component: {fileID: 2585180541048684058}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,7 +651,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5790047929993007954}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerCameraRoot
   m_TagString: CinemachineTarget
   m_Icon: {fileID: 0}
@@ -682,7 +682,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7582061760171166399}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FlatScreenPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
