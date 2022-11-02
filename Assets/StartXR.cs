@@ -22,4 +22,10 @@ public class StartXR : MonoBehaviour
             Instantiate(flatScreenPrefab, Vector3.zero, Quaternion.identity);
         }
     }
+
+    private void OnApplicationQuit()
+    {
+        XRGeneralSettings.Instance.Manager.StopSubsystems();
+        XRGeneralSettings.Instance.Manager.DeinitializeLoader();
+    }
 }
