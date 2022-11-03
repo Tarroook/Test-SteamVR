@@ -11,15 +11,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ignored By Player
   - Water
   - UI
   - Player
-  - Projectile
+  - PlayerProjectile
   - Environment
-  - 
-  - 
-  - 
+  - PlayerEquiped
+  - Weapon
+  - Projectile
   - 
   - 
   - 

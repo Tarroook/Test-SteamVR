@@ -2202,6 +2202,7 @@ GameObject:
   - component: {fileID: 5541534467203606285}
   - component: {fileID: 5541534467203606284}
   - component: {fileID: 5541534467763757469}
+  - component: {fileID: 2007280758175064567}
   m_Layer: 6
   m_Name: VRPlayer
   m_TagString: Untagged
@@ -2287,7 +2288,9 @@ MonoBehaviour:
   input:
     actionPath: /actions/default/in/MoveDirection
     needsReinit: 0
-  speed: 1
+  speed: 2
+  gravMultiplier: 1
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!143 &5541534467763757469
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2306,6 +2309,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!114 &2007280758175064567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5541534467763671526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf52a9ea3c160e4aa4dcae744ff445f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerEye: {fileID: 5541534467763747214}
 --- !u!1 &5541534467763672968
 GameObject:
   m_ObjectHideFlags: 0

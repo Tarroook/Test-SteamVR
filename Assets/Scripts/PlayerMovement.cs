@@ -7,12 +7,18 @@ using Valve.VR.InteractionSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public SteamVR_Action_Vector2 input;
-    public float speed = 1;
     private CharacterController cc;
+
+    public float speed = 1;
+
+    public float gravMultiplier = 1f;
+    private readonly float gravity = -9.81f;
+    [SerializeField] Vector3 velocity;
 
     private void Start()
     {
         cc = GetComponent<CharacterController>();
+        cc.detectCollisions = false;
     }
 
     // Update is called once per frame
@@ -21,7 +27,22 @@ public class PlayerMovement : MonoBehaviour
         if (input.axis.magnitude > .1f)
         {
             Vector3 direction = Player.instance.hmdTransform.TransformDirection(new Vector3(input.axis.x, 0f, input.axis.y));
-            cc.Move(Vector3.ProjectOnPlane(direction, Vector3.up) * speed * Time.deltaTime - new Vector3(0f, 9.81f, 0f) * Time.deltaTime);
+            cc.Move(Vector3.ProjectOnPlane(direction, Vector3.up) * speed * Time.deltaTime);
+        }
+
+        doGravity();
+    }
+
+    private void doGravity() // need to multiply by time squared because physics
+    {
+        if (!cc.isGrounded)
+        {
+            velocity.y += gravity * gravMultiplier * Time.deltaTime;
+            cc.Move(velocity * Time.deltaTime);
+        }
+        else
+        {
+            velocity.y = -2f;
         }
     }
 }
