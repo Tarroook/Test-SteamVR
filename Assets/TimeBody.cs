@@ -9,13 +9,11 @@ public class TimeBody : MonoBehaviour
 
     PointInTime[] pointsInTime;
     private int sizeOfActivePoints = 0; // used as ".Lenght" because pointsInTime's actual length never changes
-    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         pointsInTime = new PointInTime[(int)Mathf.Round(recordSeconds / Time.fixedDeltaTime)];
-        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -62,13 +60,11 @@ public class TimeBody : MonoBehaviour
     public void startRewind()
     {
         isRewinding = true;
-        rb.isKinematic = true;
     }
 
     public void stopRewind()
     {
         isRewinding = false;
-        rb.isKinematic = false;
     }
 
     // inserts newPoint at pos and "removes" last value
