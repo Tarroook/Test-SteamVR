@@ -7,7 +7,7 @@ using UnityEngine.XR.Management;
 public class StartXR : MonoBehaviour
 {
     public bool startInVr = true;
-    public GameObject vrPrefab;
+    public GameObject vrPlayer;
     public GameObject flatScreenPrefab;
     private void Awake()
     {
@@ -15,7 +15,8 @@ public class StartXR : MonoBehaviour
         {
             XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
             XRGeneralSettings.Instance.Manager.StartSubsystems();
-            Instantiate(vrPrefab, Vector3.zero, Quaternion.identity);
+            vrPlayer.SetActive(true);
+            //Instantiate(vrPrefab, Vector3.zero, Quaternion.identity);
         }
         else
         {
