@@ -21,6 +21,7 @@ public class StartXR : MonoBehaviour
         else
         {
             Instantiate(flatScreenPrefab, Vector3.zero, Quaternion.identity);
+            Destroy(vrPlayer);
         }
     }
 
