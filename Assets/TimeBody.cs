@@ -7,13 +7,14 @@ public class TimeBody : MonoBehaviour
     private bool isRewinding = false;
     public float recordSeconds = 5f;
 
-    private List<PointInTime> pointsInTime;
+    PointInTime[] pointsInTime;
+    private int sizeOfActivePoints = 0; // used as ".Lenght" because pointsInTime's actual length never changes
     private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        pointsInTime = new List<PointInTime>();
+        pointsInTime = new PointInTime[(int)Mathf.Round(recordSeconds / Time.fixedDeltaTime)];
         rb = GetComponent<Rigidbody>();
     }
 
@@ -41,22 +42,18 @@ public class TimeBody : MonoBehaviour
     // And also round it because Count is int
     private void record() 
     {
-        if(pointsInTime.Count > Mathf.Round(recordSeconds / Time.fixedDeltaTime))
-        {
-            pointsInTime.RemoveAt(pointsInTime.Count - 1);
-        }
-        pointsInTime.Insert(0, new PointInTime(transform.position, transform.rotation, transform.localScale));
+        insertPointIntoArray(0, new PointInTime(transform.position, transform.rotation, transform.localScale));
     }
 
     private void rewind()
     {
-        if (pointsInTime.Count > 0)
+        if (sizeOfActivePoints > 0 && pointsInTime[0].isNotNull)
         {
             PointInTime pointInTime = pointsInTime[0];
             transform.position = pointInTime.position;
             transform.rotation = pointInTime.rotation;
             transform.localScale = pointInTime.scale;
-            pointsInTime.RemoveAt(0);
+            removePointFromArray(0);
         }
         else
             stopRewind();
@@ -72,5 +69,49 @@ public class TimeBody : MonoBehaviour
     {
         isRewinding = false;
         rb.isKinematic = false;
+    }
+
+    // inserts newPoint at pos and "removes" last value
+    private void insertPointIntoArray(int pos, PointInTime newPoint)
+    {
+        if (pos > pointsInTime.Length)// can't be fucked with throwing errors/warnings rn lmao
+        {
+            Debug.Log("insert point bad position");
+            return;
+        }
+
+        PointInTime[] newArray = new PointInTime[pointsInTime.Length];
+        for(int i = 0; i < pointsInTime.Length; i++)
+        {
+            if (i < pos)
+                newArray[i] = pointsInTime[i];
+            else if (i == pos)
+                newArray[i] = newPoint;
+            else
+                newArray[i] = pointsInTime[i - 1];
+
+        }
+        pointsInTime = newArray;
+
+        sizeOfActivePoints++;
+        if (sizeOfActivePoints < pointsInTime.Length)
+            sizeOfActivePoints = pointsInTime.Length;
+    }
+
+    private void removePointFromArray(int pos)
+    {
+        if(pos > pointsInTime.Length)
+        {
+            Debug.Log("remove point bad position");
+            return;
+        }
+
+        PointInTime[] newArray = new PointInTime[pointsInTime.Length];
+        for (int i = pos; i + 1 < pointsInTime.Length; i++)
+        {
+            newArray[i] = pointsInTime[i + 1];
+        }
+        pointsInTime = newArray; // don't even have to set "last" value to null cuz structs can't be null
+        sizeOfActivePoints--;
     }
 }

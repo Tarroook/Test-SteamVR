@@ -2,6 +2,7 @@ using UnityEngine;
 
 public struct PointInTime
 {
+    public bool isNotNull;
     public Vector3 position;
     public Quaternion rotation;
     public Vector3 scale;
@@ -11,5 +12,7 @@ public struct PointInTime
         position = pos;
         rotation = rot;
         scale = sca;
+
+        isNotNull = true;
     }
 }
