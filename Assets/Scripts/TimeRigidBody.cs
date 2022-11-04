@@ -17,12 +17,14 @@ public class TimeRigidBody : MonoBehaviour
 
         tb.onRecordPoint += record;
         tb.onStopRewind += rewindStopped;
+        tb.onHoldTime += hold;
     }
 
     private void OnDisable()
     {
         tb.onRecordPoint -= record;
         tb.onStopRewind -= rewindStopped;
+        tb.onHoldTime -= hold;
     }
 
     void Start()
@@ -35,14 +37,18 @@ public class TimeRigidBody : MonoBehaviour
 
     private void Update()
     {
-        if (tb.isRewinding)
+        if (tb.isRewinding || tb.isHolding)
             rb.isKinematic = true;
     }
 
     private void record()
     {
         velocities[tb.sizeOfActivePoints - 1] = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
-        Debug.Log("Index : " + (tb.sizeOfActivePoints - 1) + " Vector : " + new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z));
+    }
+
+    private void hold(int index)
+    {
+
     }
 
     private void rewindStopped()
