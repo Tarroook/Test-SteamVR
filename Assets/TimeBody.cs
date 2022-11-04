@@ -4,20 +4,30 @@ using UnityEngine;
 
 public class TimeBody : MonoBehaviour
 {
-    private bool isRewinding = false;
+    public bool isRewinding = false;
     public float recordSeconds = 5f;
 
     PointInTime[] pointsInTime;
-    private int sizeOfActivePoints = 0; // used as ".Lenght" because pointsInTime's actual length never changes
+    public int sizeOfActivePoints = 0; // used as ".Lenght" because pointsInTime's actual length never changes
+
+    public delegate void rewindPointAction();
+    public event rewindPointAction onRewindPoint;
+
+    public delegate void recordPointAction();
+    public event recordPointAction onRecordPoint;
+
+    public delegate void stopRewindAction();
+    public event stopRewindAction onStopRewind;
+
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         pointsInTime = new PointInTime[(int)Mathf.Round(recordSeconds / Time.fixedDeltaTime)];
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return)){
             startRewind();
@@ -38,12 +48,14 @@ public class TimeBody : MonoBehaviour
 
     // 1f / Time.fixedDeltaTime is the amounts of fixedUpdate called in a second, so multiply it by x to record x seconds
     // And also round it because Count is int
-    private void record() 
+    protected virtual void record() 
     {
         insertPointIntoArray(0, new PointInTime(transform.position, transform.rotation, transform.localScale));
+        if (onRecordPoint != null)
+            onRecordPoint();
     }
 
-    private void rewind()
+    protected virtual void rewind()
     {
         if (sizeOfActivePoints > 0 && pointsInTime[0].isNotNull)
         {
@@ -52,19 +64,23 @@ public class TimeBody : MonoBehaviour
             transform.rotation = pointInTime.rotation;
             transform.localScale = pointInTime.scale;
             removePointFromArray(0);
+            if (onRewindPoint != null)
+                onRewindPoint();
         }
         else
             stopRewind();
     }
 
-    public void startRewind()
+    public virtual void startRewind()
     {
         isRewinding = true;
     }
 
-    public void stopRewind()
+    public virtual void stopRewind()
     {
         isRewinding = false;
+        if (onStopRewind != null)
+            onStopRewind();
     }
 
     // inserts newPoint at pos and "removes" last value
@@ -90,7 +106,7 @@ public class TimeBody : MonoBehaviour
         pointsInTime = newArray;
 
         sizeOfActivePoints++;
-        if (sizeOfActivePoints < pointsInTime.Length)
+        if (sizeOfActivePoints > pointsInTime.Length)
             sizeOfActivePoints = pointsInTime.Length;
     }
 
