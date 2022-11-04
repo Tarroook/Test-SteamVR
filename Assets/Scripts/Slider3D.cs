@@ -7,6 +7,8 @@ public class Slider3D : MonoBehaviour
     private Transform startPoint;
     private Transform endPoint;
     private Transform slider;
+    private Transform limit;
+
     [Range(0.0f, 1.0f)]
     public float value;
 

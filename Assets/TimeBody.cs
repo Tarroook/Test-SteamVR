@@ -27,6 +27,7 @@ public class TimeBody : MonoBehaviour
     public event holdTimeAction onHoldTime;
 
     public int maxPoints;
+
     [Range(0f, 1f)]
     public float cursor = 0f;
 
@@ -36,6 +37,7 @@ public class TimeBody : MonoBehaviour
     private void Start()
     {
         maxPoints = (int)Mathf.Round(recordSeconds / Time.fixedDeltaTime);
+        Debug.Log(Time.fixedDeltaTime);
         pointsInTime = new PointInTime[maxPoints];
     }
 
@@ -51,6 +53,7 @@ public class TimeBody : MonoBehaviour
         }
 
         time = (float)sizeOfActivePoints / maxPoints;
+
         if (!isHolding)
             cursor = time;
     }
@@ -87,7 +90,7 @@ public class TimeBody : MonoBehaviour
             transform.position = pointInTime.position;
             transform.rotation = pointInTime.rotation;
             transform.localScale = pointInTime.scale;
-            Debug.Log("index = " + index + " math = " + timeToHold * maxPoints);
+            //Debug.Log("index = " + index + " math = " + timeToHold * maxPoints);
             if (onHoldTime != null)
                 onHoldTime(index);
         }

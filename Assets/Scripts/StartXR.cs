@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Management;
+using Valve.VR;
 
 public class StartXR : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class StartXR : MonoBehaviour
         {
             XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
             XRGeneralSettings.Instance.Manager.StartSubsystems();
+            SteamVR.settings.lockPhysicsUpdateRateToRenderFrequency = false;
             vrPlayer.SetActive(true);
             //Instantiate(vrPrefab, Vector3.zero, Quaternion.identity);
         }
