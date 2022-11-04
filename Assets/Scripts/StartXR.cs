@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,21 @@ public class StartXR : MonoBehaviour
     {
         if (startInVr)
         {
+            if (XRGeneralSettings.Instance.Manager.activeLoader != null)
+            {
+                stopXR();
+            }
             XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
             XRGeneralSettings.Instance.Manager.StartSubsystems();
-            SteamVR.settings.lockPhysicsUpdateRateToRenderFrequency = false;
+            try
+            {
+                SteamVR.settings.lockPhysicsUpdateRateToRenderFrequency = false;
+            }
+            catch (NullReferenceException)
+            {
+                Debug.Log("Set steamvr fixed Update rule to false");
+            }
+            
             vrPlayer.SetActive(true);
             //Instantiate(vrPrefab, Vector3.zero, Quaternion.identity);
         }
