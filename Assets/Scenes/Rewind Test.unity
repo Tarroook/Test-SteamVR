@@ -2082,6 +2082,8 @@ GameObject:
   - component: {fileID: 1576852070}
   - component: {fileID: 1576852069}
   - component: {fileID: 1576852068}
+  - component: {fileID: 1576852073}
+  - component: {fileID: 1576852072}
   m_Layer: 0
   m_Name: PhysCube (4)
   m_TagString: Untagged
@@ -2183,6 +2185,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576852066}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1576852072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576852066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 647518d2a9aee1c448c7b29d11a281c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1576852073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576852066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4985d7d7c9aa345a4efbe1efbc7ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRewinding: 0
+  isHolding: 0
+  recordSeconds: 5
+  time: 0.545
+  sizeOfActivePoints: 0
+  maxPoints: 0
+  cursor: 0.552
 --- !u!1001 &1578691837
 PrefabInstance:
   m_ObjectHideFlags: 0
