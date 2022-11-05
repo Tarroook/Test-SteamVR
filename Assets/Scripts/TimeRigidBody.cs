@@ -76,7 +76,6 @@ public class TimeRigidBody : MonoBehaviour
         rb.isKinematic = originalKinematicValue;
         if (!rb.isKinematic)
             rb.AddForce(velocities[tb.sizeOfActivePoints - 1], ForceMode.Impulse);
-        Debug.Log(velocities[tb.sizeOfActivePoints - 1] + "Index : " + (tb.sizeOfActivePoints - 1));
     }
 
     private void rewindStopped()

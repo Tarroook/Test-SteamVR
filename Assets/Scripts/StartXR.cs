@@ -21,14 +21,6 @@ public class StartXR : MonoBehaviour
             }
             XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
             XRGeneralSettings.Instance.Manager.StartSubsystems();
-            try
-            {
-                SteamVR.settings.lockPhysicsUpdateRateToRenderFrequency = false;
-            }
-            catch (NullReferenceException)
-            {
-                Debug.Log("Set steamvr fixed Update rule to false");
-            }
             
             vrPlayer.SetActive(true);
             //Instantiate(vrPrefab, Vector3.zero, Quaternion.identity);
