@@ -6,6 +6,7 @@ public class TimeBody : MonoBehaviour
 {
     public bool isRewinding = false;
     public bool isHolding = false;
+    private bool wasHolding = false;
 
     public float recordSeconds = 5f;
     [Range(0f, 1f)]
@@ -26,6 +27,9 @@ public class TimeBody : MonoBehaviour
     public delegate void holdTimeAction(int index);
     public event holdTimeAction onHoldTime;
 
+    public delegate void releaseTimeAction();
+    public event releaseTimeAction onReleaseTime;
+
     public int maxPoints;
 
     [Range(0f, 1f)]
@@ -44,19 +48,12 @@ public class TimeBody : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return)){
-            startRewind();
-        }
-        if (Input.GetKeyUp(KeyCode.Return))
-        {
-            stopRewind();
-        }
-
         time = (float)sizeOfActivePoints / maxPoints;
 
         if (!isHolding)
             cursor = time;
-        cursor = Mathf.Clamp(cursor, 0f, time);
+        cursor = Mathf.Clamp(cursor, 0f, time);         
+        wasHolding = isHolding;
     }
 
     private void FixedUpdate()
@@ -65,6 +62,8 @@ public class TimeBody : MonoBehaviour
             rewind();
         else if (isHolding)
             hold(cursor);
+        else if (!isHolding && wasHolding)
+            release(hold(cursor));
         else
             record();
     }
@@ -80,7 +79,7 @@ public class TimeBody : MonoBehaviour
 
     // timeToHold should be a value between 0 and 1
     //index needs to start at 0 and go up to sizeOfActivePoints - 1
-    private void hold(float timeToHold)
+    private int hold(float timeToHold)
     {
         if (sizeOfActivePoints > 0 && pointsInTime[0].isNotNull)
         {
@@ -94,7 +93,17 @@ public class TimeBody : MonoBehaviour
             //Debug.Log("index = " + index + " math = " + timeToHold * maxPoints);
             if (onHoldTime != null)
                 onHoldTime(index);
+            return index;
         }
+        return -1;
+    }
+
+    private void release(int index)
+    {
+        Debug.Log("released");
+        cleanAfterIndex(index);
+        if (onReleaseTime != null)
+            onReleaseTime();
     }
 
     private void rewind()
@@ -153,6 +162,15 @@ public class TimeBody : MonoBehaviour
 
         if (sizeOfActivePoints < pointsInTime.Length)
             sizeOfActivePoints++;
+    }
+
+    private void cleanAfterIndex(int index)
+    {
+        for(int i = index + 1; i < pointsInTime.Length; i++)
+        {
+            pointsInTime[i].isNotNull = false;
+        }
+        sizeOfActivePoints = index + 1;
     }
 
 
