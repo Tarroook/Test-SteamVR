@@ -32,8 +32,25 @@ public class TimeBody : MonoBehaviour
 
     public int maxPoints;
 
-    [Range(0f, 1f)]
-    public float cursor = 0f;
+    public Slider3D cursor;
+
+
+    private void OnEnable()
+    {
+        if (cursor == null)
+            cursor = GameObject.FindGameObjectWithTag("PlayerTimeSlider").GetComponent<Slider3D>();
+        if (cursor == null)
+            Debug.Log("No time cursor found");
+        
+        cursor.onGrab += startHolding;
+        cursor.onRelease += stopHolding;
+    }
+
+    private void OnDisable()
+    {
+        cursor.onGrab -= startHolding;
+        cursor.onRelease -= stopHolding;
+    }
 
 
     // 1f / Time.fixedDeltaTime is the amounts of fixedUpdate called in a second, so multiply it by x to record x seconds
@@ -41,7 +58,6 @@ public class TimeBody : MonoBehaviour
     private void Start()
     {
         maxPoints = (int)Mathf.Round(recordSeconds / Time.fixedDeltaTime);
-        Debug.Log(Time.fixedDeltaTime);
         pointsInTime = new PointInTime[maxPoints];
     }
 
@@ -51,8 +67,8 @@ public class TimeBody : MonoBehaviour
         time = (float)sizeOfActivePoints / maxPoints;
 
         if (!isHolding)
-            cursor = time;
-        cursor = Mathf.Clamp(cursor, 0f, time);         
+            cursor.value = time;
+        cursor.value = Mathf.Clamp(cursor.value, 0f, time);         
         wasHolding = isHolding;
     }
 
@@ -61,9 +77,9 @@ public class TimeBody : MonoBehaviour
         if (isRewinding)
             rewind();
         else if (isHolding)
-            hold(cursor);
+            hold(cursor.value);
         else if (!isHolding && wasHolding)
-            release(hold(cursor));
+            release(hold(cursor.value));
         else
             record();
     }
@@ -84,7 +100,6 @@ public class TimeBody : MonoBehaviour
         if (sizeOfActivePoints > 0 && pointsInTime[0].isNotNull)
         {
             int index = (int)Mathf.Round(timeToHold * maxPoints);
-            //index = Mathf.Abs(index - maxPoints);
             index = (int)Mathf.Clamp(index, 0f, sizeOfActivePoints - 1);
             PointInTime pointInTime = pointsInTime[index];
             transform.position = pointInTime.position;
@@ -100,7 +115,6 @@ public class TimeBody : MonoBehaviour
 
     private void release(int index)
     {
-        Debug.Log("released");
         cleanAfterIndex(index);
         if (onReleaseTime != null)
             onReleaseTime();
@@ -134,6 +148,15 @@ public class TimeBody : MonoBehaviour
             onStopRewind();
     }
 
+    public void startHolding()
+    {
+        isHolding = true;
+    }
+
+    public void stopHolding()
+    {
+        isHolding = false;
+    }
 
 
     private void addPointAtEnd(PointInTime newPoint)
