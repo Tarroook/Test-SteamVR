@@ -34,6 +34,7 @@ public class TimeBody : MonoBehaviour
     public event releaseTimeAction onReleaseTime;
 
     private bool doOnce = false;
+    private PointInTime[] storageArray; // Reused to not make garbage
 
 
     private void OnEnable()
@@ -70,6 +71,7 @@ public class TimeBody : MonoBehaviour
         {
             maxPoints = (int)Mathf.Round(recordSeconds / Time.fixedDeltaTime);
             pointsInTime = new PointInTime[maxPoints];
+            storageArray = new PointInTime[maxPoints];
             doOnce = true;
         }
 
@@ -184,13 +186,12 @@ public class TimeBody : MonoBehaviour
 
         if (!added)// full so we add it at the end and move everything
         {
-            PointInTime[] newArray = new PointInTime[pointsInTime.Length];
             for (int i = 0; i + 1 < pointsInTime.Length; i++)
             {
-                newArray[i] = pointsInTime[i + 1];
+                storageArray[i] = pointsInTime[i + 1];
             }
-            newArray[pointsInTime.Length - 1] = newPoint;
-            pointsInTime = newArray;
+            storageArray[pointsInTime.Length - 1] = newPoint;
+            pointsInTime = storageArray;
         }
 
         if (sizeOfActivePoints < pointsInTime.Length)
@@ -216,18 +217,17 @@ public class TimeBody : MonoBehaviour
             return;
         }
 
-        PointInTime[] newArray = new PointInTime[pointsInTime.Length];
         for(int i = 0; i < pointsInTime.Length; i++)
         {
             if (i < pos)
-                newArray[i] = pointsInTime[i];
+                storageArray[i] = pointsInTime[i];
             else if (i == pos)
-                newArray[i] = newPoint;
+                storageArray[i] = newPoint;
             else
-                newArray[i] = pointsInTime[i - 1];
+                storageArray[i] = pointsInTime[i - 1];
 
         }
-        pointsInTime = newArray;
+        pointsInTime = storageArray;
 
         sizeOfActivePoints++;
         if (sizeOfActivePoints > pointsInTime.Length)
@@ -242,12 +242,11 @@ public class TimeBody : MonoBehaviour
             return;
         }
 
-        PointInTime[] newArray = new PointInTime[pointsInTime.Length];
         for (int i = pos; i + 1 < pointsInTime.Length; i++)
         {
-            newArray[i] = pointsInTime[i + 1];
+            storageArray[i] = pointsInTime[i + 1];
         }
-        pointsInTime = newArray; // don't even have to set "last" value to null cuz structs can't be null
+        pointsInTime = storageArray; // don't even have to set "last" value to null cuz structs can't be null
         sizeOfActivePoints--;
     }
 }

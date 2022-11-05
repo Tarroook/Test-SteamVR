@@ -8,6 +8,7 @@ public class TimeRigidBody : MonoBehaviour
     private Rigidbody rb;
     private TimeBody tb;
     private bool originalKinematicValue = true;
+    private bool doOnce = false;
 
     private Vector3[] velocities;
 
@@ -37,6 +38,11 @@ public class TimeRigidBody : MonoBehaviour
 
     private void Update()
     {
+        if (!doOnce)
+        {
+            velocities = new Vector3[(int)Mathf.Round(tb.recordSeconds / Time.fixedDeltaTime)];
+            doOnce = true;
+        }
         if (tb.isRewinding || tb.isHolding)
             rb.isKinematic = true;
     }
