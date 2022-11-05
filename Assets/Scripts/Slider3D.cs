@@ -25,9 +25,14 @@ public class Slider3D : MonoBehaviour
         slider = gameObject.transform.Find("Slider");
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         slider.localPosition = new Vector3(0f, 0f, Mathf.Clamp(slider.localPosition.z, startPoint.localPosition.z, endPoint.localPosition.z));
+    }
+
+    private void FixedUpdate()
+    {
+        
         if (!isGrabbed)
         {
             slider.localPosition = new Vector3(0f, 0f, value * endPoint.localPosition.z);
