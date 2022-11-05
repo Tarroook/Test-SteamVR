@@ -59,7 +59,6 @@ public class TimeBody : MonoBehaviour
     // And also round it because Count is int
     private void Start()
     {
-        Debug.Log(Time.fixedDeltaTime);
         maxPoints = (int)Mathf.Round(recordSeconds / Time.fixedDeltaTime);
         pointsInTime = new PointInTime[maxPoints];
     }
@@ -81,7 +80,6 @@ public class TimeBody : MonoBehaviour
             cursor.value = time;
         cursor.value = Mathf.Clamp(cursor.value, 0f, time);         
         wasHolding = isHolding;
-        Debug.Log(Time.fixedDeltaTime);
     }
 
     private void FixedUpdate()

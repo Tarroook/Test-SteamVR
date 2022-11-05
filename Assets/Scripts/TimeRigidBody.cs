@@ -11,6 +11,7 @@ public class TimeRigidBody : MonoBehaviour
     private bool doOnce = false;
 
     private Vector3[] velocities;
+    private Vector3[] storageArray;
 
     private void OnEnable()
     {
@@ -19,6 +20,7 @@ public class TimeRigidBody : MonoBehaviour
         tb.onRecordPoint += record;
         tb.onStopRewind += rewindStopped;
         tb.onReleaseTime += release;
+        tb.onHoldTime += hold;
     }
 
     private void OnDisable()
@@ -26,6 +28,7 @@ public class TimeRigidBody : MonoBehaviour
         tb.onRecordPoint -= record;
         tb.onStopRewind -= rewindStopped;
         tb.onReleaseTime -= release;
+        tb.onHoldTime -= hold;
     }
 
     void Start()
@@ -41,15 +44,31 @@ public class TimeRigidBody : MonoBehaviour
         if (!doOnce)
         {
             velocities = new Vector3[(int)Mathf.Round(tb.recordSeconds / Time.fixedDeltaTime)];
+            storageArray = new Vector3[(int)Mathf.Round(tb.recordSeconds / Time.fixedDeltaTime)];
             doOnce = true;
         }
-        if (tb.isRewinding || tb.isHolding)
+        if (tb.isRewinding)
             rb.isKinematic = true;
     }
 
     private void record()
     {
-        velocities[tb.sizeOfActivePoints - 1] = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+        if(tb.sizeOfActivePoints < tb.maxPoints)
+            velocities[tb.sizeOfActivePoints - 1] = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+        else
+        {
+            for (int i = 0; i + 1 < velocities.Length; i++)
+            {
+                storageArray[i] = velocities[i + 1];
+            }
+            storageArray[velocities.Length - 1] = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+            velocities = storageArray;
+        }
+    }
+
+    private void hold(int index)
+    {
+        rb.isKinematic = true;
     }
 
     private void release()
@@ -57,6 +76,7 @@ public class TimeRigidBody : MonoBehaviour
         rb.isKinematic = originalKinematicValue;
         if (!rb.isKinematic)
             rb.AddForce(velocities[tb.sizeOfActivePoints - 1], ForceMode.Impulse);
+        Debug.Log(velocities[tb.sizeOfActivePoints - 1] + "Index : " + (tb.sizeOfActivePoints - 1));
     }
 
     private void rewindStopped()
