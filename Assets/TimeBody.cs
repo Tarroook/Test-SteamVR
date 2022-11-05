@@ -56,6 +56,7 @@ public class TimeBody : MonoBehaviour
 
         if (!isHolding)
             cursor = time;
+        cursor = Mathf.Clamp(cursor, 0f, time);
     }
 
     private void FixedUpdate()
@@ -147,6 +148,7 @@ public class TimeBody : MonoBehaviour
                 newArray[i] = pointsInTime[i + 1];
             }
             newArray[pointsInTime.Length - 1] = newPoint;
+            pointsInTime = newArray;
         }
 
         if (sizeOfActivePoints < pointsInTime.Length)
