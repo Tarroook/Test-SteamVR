@@ -172,8 +172,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6531197729418586482}
-  - component: {fileID: 155290636142232246}
-  - component: {fileID: 2244086311459683180}
+  - component: {fileID: 7986815694066426384}
+  - component: {fileID: 2399433390788336142}
   m_Layer: 0
   m_Name: vr_glove_left_slim
   m_TagString: Untagged
@@ -196,7 +196,7 @@ Transform:
   m_Father: {fileID: 2229995057751917914}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &155290636142232246
+--- !u!33 &7986815694066426384
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,7 +204,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 707490012330310578}
   m_Mesh: {fileID: 7927821202470849677, guid: 01c6d47fbcb42b841ae59401a271e06a, type: 3}
---- !u!23 &2244086311459683180
+--- !u!23 &2399433390788336142
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
